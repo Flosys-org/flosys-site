@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About FLOSYS — The team behind Flo</title>
+<meta name="description" content="FLOSYS is a Texas AI company building Flo, the AI receptionist for any business. Meet the founders and the team.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav-wrap">
+  <nav class="nav glass" aria-label="Primary">
+    <a class="brand" href="/" aria-label="FLOSYS home">
+      <svg class="mark" viewBox="0 0 48 48" width="30" height="30" aria-hidden="true">
+        <defs>
+          <radialGradient id="og" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#f3e8ff"/><stop offset=".35" stop-color="#a855f7"/><stop offset=".8" stop-color="#4c1d95"/><stop offset="1" stop-color="#2e1065"/></radialGradient>
+          <linearGradient id="oe" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9d5ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+        </defs>
+        <circle cx="24" cy="24" r="20" fill="url(#og)"/>
+        <circle cx="24" cy="24" r="20" fill="none" stroke="url(#oe)" stroke-width="1.5" opacity=".9"/>
+        <path d="M10 24c3 0 3-6 6-6s3 12 6 12 3-12 6-12 3 6 6 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>FLOSYS</span>
+    </a>
+    <div class="nav-links">
+      <a href="/#flow">Flo</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#services">Services</a>
+      <a href="/about.html">About</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <a class="btn btn-primary" href="/#talk">Talk to Flo</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+  </nav>
+  <div class="mobile-menu glass" id="mobileMenu" hidden>
+    <a href="/#flow">Flo</a>
+    <a href="/#pricing">Pricing</a>
+    <a href="/#services">Services</a>
+    <a href="/about.html">About</a>
+    <a href="/#contact">Contact</a>
+    <a class="btn btn-primary" href="/#talk">Talk to Flo</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-head" id="hero">
+    <div class="wrap">
+      <p class="eyebrow reveal">About FLOSYS</p>
+      <h1 class="reveal">We build the front desk every business wishes it could afford.</h1>
+      <p class="lede reveal">FLOSYS is a Texas AI company. Our product is Flo, an AI receptionist that answers every call for your business, books the appointment, and reports back. We started it because we watched good businesses lose customers to missed calls and slow follow-up, and we knew the technology to fix it had arrived.</p>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">The team</p>
+        <h2>Three people. One phone line that always gets answered.</h2>
+      </div>
+      <div class="team-grid">
+        <article class="panel glass person">
+          <div class="avatar glass"><span>PO</span></div>
+          <span class="role">Co-founder &amp; CEO</span>
+          <h3>Pete O'Neal</h3>
+          <p>Pete sets the direction of the company and owns how FLOSYS shows up for customers: the offer, the pricing, and the promise that Flo pays for herself in booked appointments. He's the voice in the room asking whether a feature makes a business owner's week easier, and if it doesn't, it doesn't ship.</p>
+        </article>
+        <article class="panel glass person">
+          <div class="avatar glass"><span>KG</span></div>
+          <span class="role">Co-founder &amp; CTO</span>
+          <h3>Kirby Guidry</h3>
+          <p>Kirby builds Flo and everything behind her: the voice agent, the booking and text-recap systems, the client dashboard, and the platform that keeps it all running around the clock. When something breaks at 2 AM, he's the one who fixes it, and he designs the systems so that it rarely does.</p>
+        </article>
+        <article class="panel glass person">
+          <div class="avatar glass"><span>JG</span></div>
+          <span class="role">Head of Sales</span>
+          <h3>Josh Guidry</h3>
+          <p>Josh is the first human you'll talk to. He runs sales and onboarding: the intake conversation, getting Flo set up around your services and your calendar, and making sure she sounds like your business before she ever takes a live call. Email him at <a href="mailto:josh@flosys.org">josh@flosys.org</a>.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="values">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">How we work</p>
+        <h2>The rules Flo lives by.</h2>
+      </div>
+      <div class="values">
+        <div class="panel glass"><h3>Never guess a name.</h3><p>Flo only calls someone by name if they told her. She'd rather ask than get it wrong in front of your customer.</p></div>
+        <div class="panel glass"><h3>Nothing untested touches a client.</h3><p>Every new feature runs on our own practice lines first. Your customers never hear an experiment.</p></div>
+        <div class="panel glass"><h3>You see everything.</h3><p>Every call, recording, and transcript is in your dashboard. If Flo makes a mistake, the recap says so.</p></div>
+        <div class="panel glass"><h3>Flat pricing.</h3><p>One monthly price. No per-minute meters, no surprise overages.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="panel glass contact-card">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>Talk to Flo, or talk to Josh.</h2>
+          <p class="muted">Based in Magnolia, Texas. Serving businesses everywhere.</p>
+        </div>
+        <div class="contact-list">
+          <a class="contact-item" href="tel:+13465906353"><span class="label">Phone</span><span class="val">346-590-6353</span></a>
+          <a class="contact-item" href="mailto:josh@flosys.org"><span class="label">Email</span><span class="val">josh@flosys.org</span></a>
+          <div class="contact-item"><span class="label">Based in</span><span class="val">Magnolia, Texas</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="brand small"><svg class="mark" viewBox="0 0 48 48" width="30" height="30" aria-hidden="true">
+        <defs>
+          <radialGradient id="og" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#f3e8ff"/><stop offset=".35" stop-color="#a855f7"/><stop offset=".8" stop-color="#4c1d95"/><stop offset="1" stop-color="#2e1065"/></radialGradient>
+          <linearGradient id="oe" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9d5ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+        </defs>
+        <circle cx="24" cy="24" r="20" fill="url(#og)"/>
+        <circle cx="24" cy="24" r="20" fill="none" stroke="url(#oe)" stroke-width="1.5" opacity=".9"/>
+        <path d="M10 24c3 0 3-6 6-6s3 12 6 12 3-12 6-12 3 6 6 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg><span>FLOSYS</span></div>
+      <p class="muted">AI receptionist and front office for any business.<br>Magnolia, Texas</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="tel:+13465906353">346-590-6353</a><br>
+      <a href="mailto:josh@flosys.org">josh@flosys.org</a>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <a href="/terms.html">Terms of Service</a><br>
+      <a href="/privacy.html">Privacy Policy</a><br>
+      <a href="/refund.html">Refund &amp; Cancellation Policy</a><br>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-privacy/">SMS Privacy Policy</a><br>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-terms/">SMS Terms &amp; Conditions</a><br>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-opt-in/">Opt in to FLOSYS text messages</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 FLOSYS. All rights reserved.</span>
+    <span class="foot-links">
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/refund.html">Refunds</a>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-privacy/">SMS Privacy</a>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-terms/">SMS Terms</a>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-opt-in/">SMS Opt-In</a>
+    </span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="/assets/site.js"></script>
+</body>
+</html>

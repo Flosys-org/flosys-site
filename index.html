@@ -2,211 +2,388 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FLOSYS — AI systems for construction and the trades</title>
-<meta name="description" content="FLOSYS installs AI systems for contractors and trade businesses: AI voice agents that answer the phone, automated re-engagement that wins back past customers, websites, and social media management.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b1f3a'/><text x='50' y='68' font-size='58' font-family='Georgia,serif' font-weight='700' fill='%234da3ff' text-anchor='middle'>F</text></svg>">
-<style>
-  :root{
-    --ink:#0b1f3a; --ink-2:#1c3557; --body:#33445c; --muted:#64748b;
-    --accent:#1266d6; --accent-soft:#e8f1fd; --line:#e2e8f0; --bg:#ffffff; --bg-alt:#f6f9fc;
-    --max:1120px;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--body);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
-    font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
-  a{color:var(--accent);text-decoration:none}
-  a:hover{text-decoration:underline}
-  h1,h2,h3{color:var(--ink);line-height:1.2;margin:0 0 .5em}
-  h1{font-size:clamp(2.1rem,4.6vw,3.3rem);letter-spacing:-.02em}
-  h2{font-size:clamp(1.5rem,2.6vw,2rem);letter-spacing:-.01em}
-  h3{font-size:1.12rem}
-
-  header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);
-    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
-  .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.14em;
-    color:var(--ink);font-size:1.06rem}
-  .mark{width:34px;height:34px;border-radius:9px;background:var(--ink);color:#4da3ff;
-    display:grid;place-items:center;font-family:Georgia,serif;font-size:20px;font-weight:700;letter-spacing:0}
-  .nav-links{display:flex;gap:26px;align-items:center;font-size:.95rem}
-  .nav-links a{color:var(--ink-2);font-weight:500}
-  .btn{display:inline-block;background:var(--accent);color:#fff;padding:13px 24px;border-radius:8px;
-    font-weight:600;font-size:1rem;border:1px solid var(--accent)}
-  .btn:hover{background:#0d55b4;text-decoration:none}
-  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-  .btn-ghost:hover{background:var(--bg-alt);text-decoration:none}
-  @media(max-width:760px){.nav-links{display:none}}
-
-  .hero{padding:84px 0 72px;background:
-      radial-gradient(1000px 400px at 78% -12%,var(--accent-soft),transparent 62%);}
-  .eyebrow{display:inline-block;background:var(--accent-soft);color:#0d4ea8;font-weight:600;
-    font-size:.79rem;letter-spacing:.09em;text-transform:uppercase;padding:7px 13px;border-radius:999px;margin-bottom:22px}
-  .hero p.lede{font-size:1.2rem;max-width:47rem;margin:0 0 32px}
-  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  .cta-note{color:var(--muted);font-size:.93rem;margin-top:20px}
-
-  section{padding:74px 0;border-top:1px solid var(--line)}
-  section.alt{background:var(--bg-alt)}
-  .sec-head{max-width:44rem;margin-bottom:44px}
-  .sec-head p{margin:0;color:var(--muted)}
-
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:22px}
-  .card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:28px}
-  .card h3{display:flex;align-items:center;gap:10px;margin-bottom:.45em}
-  .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
-  .card p{margin:0;font-size:.98rem}
-
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;counter-reset:s}
-  .step{counter-increment:s}
-  .step:before{content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;
-    background:var(--ink);color:#fff;font-weight:700;margin-bottom:14px}
-  .step h3{margin-bottom:.35em}
-  .step p{margin:0;font-size:.98rem}
-
-  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-top:8px}
-  .contact-item{padding:22px;border:1px solid var(--line);border-radius:11px;background:#fff}
-  .contact-item .label{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
-    font-weight:600;margin-bottom:7px}
-  .contact-item .val{color:var(--ink);font-weight:600;font-size:1.02rem}
-
-  footer{background:var(--ink);color:#b8c7dc;padding:52px 0 34px;font-size:.93rem}
-  footer h4{color:#fff;margin:0 0 12px;font-size:1rem;letter-spacing:.1em}
-  footer a{color:#9dc5f5}
-  .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:34px;margin-bottom:34px}
-  .foot-bottom{border-top:1px solid rgba(255,255,255,.13);padding-top:20px;
-    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:#8ea4bf;font-size:.87rem}
-  .foot-bottom a{margin-left:18px}
-  @media(max-width:600px){.foot-bottom a{margin:0 18px 0 0}}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FLOSYS — Meet Flo</title>
+<meta name="description" content="FLOSYS builds Flo, the AI receptionist for any business. Flo answers every call 24/7, books the appointment, texts a full recap, and puts every call in your dashboard.">
+<meta property="og:title" content="FLOSYS — Meet Flo, the receptionist who never misses a call">
+<meta property="og:description" content="AI receptionist for any business. $299/month. Talk to Flo right now.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://flosys.org/">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
 
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="/"><span class="mark">F</span>FLOSYS</a>
-    <nav class="nav-links">
+<header class="nav-wrap">
+  <nav class="nav glass" aria-label="Primary">
+    <a class="brand" href="/" aria-label="FLOSYS home">
+      <svg class="mark" viewBox="0 0 48 48" width="30" height="30" aria-hidden="true">
+        <defs>
+          <radialGradient id="og" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#f3e8ff"/><stop offset=".35" stop-color="#a855f7"/><stop offset=".8" stop-color="#4c1d95"/><stop offset="1" stop-color="#2e1065"/></radialGradient>
+          <linearGradient id="oe" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9d5ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+        </defs>
+        <circle cx="24" cy="24" r="20" fill="url(#og)"/>
+        <circle cx="24" cy="24" r="20" fill="none" stroke="url(#oe)" stroke-width="1.5" opacity=".9"/>
+        <path d="M10 24c3 0 3-6 6-6s3 12 6 12 3-12 6-12 3 6 6 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>FLOSYS</span>
+    </a>
+    <div class="nav-links">
+      <a href="#flow">Flo</a>
+      <a href="#pricing">Pricing</a>
       <a href="#services">Services</a>
-      <a href="#how">How it works</a>
-      <a href="#about">About</a>
+      <a href="/about.html">About</a>
       <a href="#contact">Contact</a>
-    </nav>
-    <a class="btn" href="#contact">Get in touch</a>
+    </div>
+    <a class="btn btn-primary" href="#talk" data-talk>Talk to Flo</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu glass" id="mobileMenu" hidden>
+    <a href="#flow">Flo</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#services">Services</a>
+    <a href="/about.html">About</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="#talk" data-talk>Talk to Flo</a>
   </div>
 </header>
 
-<main>
+<main id="top">
 
-  <div class="hero">
-    <div class="wrap">
-      <span class="eyebrow">AI systems for construction &amp; the trades</span>
-      <h1>AI that answers the phone, wins back old customers, and books the job.</h1>
-      <p class="lede">You run the crew. FLOSYS runs the follow-up. We install AI systems that catch the
-        calls you miss, chase the leads you don't have time for, and turn your past customers into
-        next month's schedule.</p>
-      <div class="cta-row">
-        <a class="btn" href="tel:+13465906353">Call 346-590-6353</a>
-        <a class="btn btn-ghost" href="mailto:kirby@flosys.org">kirby@flosys.org</a>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="wrap hero-grid one">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">AI receptionist for every business</p>
+        <h1 class="reveal">Meet <span class="flow-word">Flo</span>.<br>The receptionist who never misses a call.</h1>
+        <p class="lede reveal">Every call answered in a natural voice, 24/7. Flo qualifies the caller, books the appointment, texts you a full recap, and puts the recording in your dashboard. You run the business. Flo runs the front desk.</p>
+        <div class="cta-row reveal">
+          <a class="btn btn-primary btn-lg" href="#talk" data-talk>
+            <span class="pulse" aria-hidden="true"></span>Talk to Flo
+          </a>
+          <a class="btn btn-glass btn-lg" href="tel:+13465906353">Call 346-590-6353</a>
+        </div>
+        <p class="hero-note reveal">Talk to Flo right here in your browser. She'll introduce herself and answer your questions. No signup.</p>
       </div>
-      <p class="cta-note">Serving general contractors, HVAC, plumbing, electrical, and stone
-        businesses across Texas and beyond.</p>
+      
     </div>
-  </div>
+    <div class="scroll-cue" aria-hidden="true"><span></span></div>
+  </section>
 
-  <section id="services">
+  <!-- WHAT FLO DOES -->
+  <section class="story" id="flow">
     <div class="wrap">
-      <div class="sec-head">
-        <h2>What we do</h2>
-        <p>Five systems. Buy one, or run the whole stack.</p>
+      <div class="sec-head compact">
+        <p class="eyebrow">Everything Flo does</p>
+        <h2>Every function, every tool. Tap one to see how it works.</h2>
       </div>
-      <div class="grid">
-        <div class="card">
-          <h3><span class="dot"></span>AI Voice Agent</h3>
-          <p>An AI receptionist that answers your phone 24/7 in a natural voice — quotes realistic
-            ranges, checks your availability, and captures the lead while your competitors' calls go
-            to voicemail.</p>
+      <div class="cap-grid">
+        <button class="cap glass" type="button" data-cap="answer" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Answers every call, 24/7</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="qualify" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Qualifies the caller</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="book" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Books into your calendar</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="confirm" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Texts booking confirmations</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="remind" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Sends appointment reminders</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="recap" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Texts you a full recap</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="record" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Records and transcribes every call</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="message" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Takes messages</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="faq" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Answers questions about your business</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="quote" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Quotes your price ranges</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="remember" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Remembers your callers</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="followup" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Follows up by text</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="review" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Sends you a weekly review</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="number" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Works with your number or a new one</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="dashboard" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Everything in your dashboard</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+        <button class="cap glass" type="button" data-cap="safe" aria-expanded="false" aria-controls="capDetail">
+          <span class="cap-title">Tested before it touches your line</span><span class="cap-plus" aria-hidden="true">+</span>
+        </button>
+      </div>
+      <div class="panel glass cap-detail" id="capDetail" hidden>
+        <button class="cap-close" type="button" aria-label="Close" data-cap-close>×</button>
+        <div class="cap-body" data-for="answer" hidden>
+          <span class="step-tag">Answers every call, 24/7</span>
+          <p>Flo picks up on the first ring, any hour, any day, in a warm natural voice with your company name. Your greeting plays all the way through before she listens, so callers never get cut off or hear a robot.</p>
+          <p class="cap-meta">Every call · Nights, weekends, holidays · No hold music</p>
         </div>
-        <div class="card">
-          <h3><span class="dot"></span>Business Blueprint</h3>
-          <p>A private, PIN-protected growth report built from your real business data. See where the
-            money's leaking, which jobs make you the most, and the exact next three moves — laid out
-            visually, not in a spreadsheet.</p>
+        <div class="cap-body" data-for="qualify" hidden>
+          <span class="step-tag">Qualifies the caller</span>
+          <p>She asks the questions you would: what do they need, where are they, how soon. By the end of the call you know whether it's a real opportunity and what it's worth.</p>
+          <p class="cap-meta">Service, location, timing · Custom questions for your business</p>
         </div>
-        <div class="card">
-          <h3><span class="dot"></span>AI Re-engagement</h3>
-          <p>Automated text campaigns that go back through your old estimates and past customers and
-            win them back. The jobs are already in your contact list — this brings them home.</p>
+        <div class="cap-body" data-for="book" hidden>
+          <span class="step-tag">Books into your calendar</span>
+          <p>Connected to your real availability. Flo offers open times, confirms with the caller, and the appointment lands on your calendar before the call ends.</p>
+          <p class="cap-meta">Google Calendar · Real-time availability · No double-booking</p>
         </div>
-        <div class="card">
-          <h3><span class="dot"></span>AI Website</h3>
-          <p>A conversion-first website with a built-in AI chat agent that answers questions and books
-            appointments while you're on the roof.</p>
+        <div class="cap-body" data-for="confirm" hidden>
+          <span class="step-tag">Texts booking confirmations</span>
+          <p>Right after booking, the customer gets a text with the day, time and what to expect. Fewer no-shows, fewer "when was that again?" calls.</p>
+          <p class="cap-meta">Sent to the customer · Your business name on it</p>
         </div>
-        <div class="card">
-          <h3><span class="dot"></span>Social Media Management</h3>
-          <p>Shoot phone video on the job; we edit it into Reels, write the captions, and post to five
-            platforms on a schedule. You build. We post.</p>
+        <div class="cap-body" data-for="remind" hidden>
+          <span class="step-tag">Sends appointment reminders</span>
+          <p>Automatic reminders go out before the appointment so people actually show up. Customers can reply STOP at any time.</p>
+          <p class="cap-meta">Day-before and day-of · Opt-out built in</p>
+        </div>
+        <div class="cap-body" data-for="recap" hidden>
+          <span class="step-tag">Texts you a full recap</span>
+          <p>After every call you get a text with everything that was discussed, any message left, anything Flo wasn't sure about, and a link to the recording.</p>
+          <p class="cap-meta">Every topic · Any mistakes flagged · Link to the call</p>
+        </div>
+        <div class="cap-body" data-for="record" hidden>
+          <span class="step-tag">Records and transcribes every call</span>
+          <p>Every call, recording and word-for-word transcript live in your dashboard. Search them, replay them, share them with your team.</p>
+          <p class="cap-meta">Searchable · Replayable · Yours</p>
+        </div>
+        <div class="cap-body" data-for="message" hidden>
+          <span class="step-tag">Takes messages</span>
+          <p>When someone needs you personally, Flo takes a proper message — who, what, how to reach them — and it's in your recap and dashboard immediately.</p>
+          <p class="cap-meta">Name, reason, callback number · Marked urgent when it is</p>
+        </div>
+        <div class="cap-body" data-for="faq" hidden>
+          <span class="step-tag">Answers questions about your business</span>
+          <p>Hours, services, service area, what to expect, how pricing works. Flo knows your business the way a great front-desk hire would after a month on the job.</p>
+          <p class="cap-meta">Trained on your details · Updated any time</p>
+        </div>
+        <div class="cap-body" data-for="quote" hidden>
+          <span class="step-tag">Quotes your price ranges</span>
+          <p>Give Flo your ranges and she'll share them the way you would — honest ballparks that set expectations without boxing you in.</p>
+          <p class="cap-meta">Your numbers · Your rules on what to share</p>
+        </div>
+        <div class="cap-body" data-for="remember" hidden>
+          <span class="step-tag">Remembers your callers</span>
+          <p>Flo keeps a contact book that grows the honest way: she asks who's calling and saves a name only when the caller gives one. She never guesses and never calls someone by the wrong name.</p>
+          <p class="cap-meta">Recognizes repeat callers · Never invents a name</p>
+        </div>
+        <div class="cap-body" data-for="followup" hidden>
+          <span class="step-tag">Follows up by text</span>
+          <p>Missed something, or the caller had to run? Flo can follow up with a text to keep the conversation going and get them booked.</p>
+          <p class="cap-meta">Customer-care updates · Only to people who opted in</p>
+        </div>
+        <div class="cap-body" data-for="review" hidden>
+          <span class="step-tag">Sends you a weekly review</span>
+          <p>Every week Flo sends a review of what came in: calls answered, appointments booked, messages, and anything that needs your attention.</p>
+          <p class="cap-meta">Calls · Bookings · Messages · What to fix</p>
+        </div>
+        <div class="cap-body" data-for="number" hidden>
+          <span class="step-tag">Works with your number or a new one</span>
+          <p>Forward your existing line to Flo, or take a new local number. Either way, callers see your business, not ours.</p>
+          <p class="cap-meta">Keep your number · Local numbers available</p>
+        </div>
+        <div class="cap-body" data-for="dashboard" hidden>
+          <span class="step-tag">Everything in your dashboard</span>
+          <p>One place for every call, recording, transcript, appointment and message, with Flo's activity in plain English.</p>
+          <p class="cap-meta">Web dashboard · Works on your phone</p>
+        </div>
+        <div class="cap-body" data-for="safe" hidden>
+          <span class="step-tag">Tested before it touches your line</span>
+          <p>Every new feature runs on our own practice lines first. Nothing untested ever answers your customers.</p>
+          <p class="cap-meta">Practice lines · Your approval before changes go live</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="how" class="alt">
+  <!-- TRANSCRIPT DEMO -->
+  <section class="demo" id="demo">
     <div class="wrap">
       <div class="sec-head">
-        <h2>How it works</h2>
-        <p>No jargon, no dashboards you'll never open.</p>
+        <p class="eyebrow">A real call, the way Flo handles it</p>
+        <h2>Two minutes on the phone. One appointment on the calendar.</h2>
       </div>
-      <div class="steps">
-        <div class="step">
+      <div class="transcript glass panel">
+        <div class="tr-head">
+          <span class="tr-dot"></span>
+          <span>Incoming call · 346-590-6353</span>
+          <span class="tr-time">Sat 7:42 PM</span>
+        </div>
+        <div class="tr-body">
+          <div class="bubble flow"><b>Flo</b>Thanks for calling Company ABC, this is Flo. How can I help you today?</div>
+          <div class="bubble caller"><b>Caller</b>Hi, I'm looking to get an estimate for some work at my place. Can someone come take a look?</div>
+          <div class="bubble flow"><b>Flo</b>We can. Are you on the north side of town, or further out?</div>
+          <div class="bubble caller"><b>Caller</b>North side, just past the county line.</div>
+          <div class="bubble flow"><b>Flo</b>Perfect. I've got Tuesday at 9 or Thursday at 1 for a visit. Which works better?</div>
+          <div class="bubble caller"><b>Caller</b>Thursday at 1.</div>
+          <div class="bubble flow"><b>Flo</b>You're set for Thursday at 1. What's the best number to text the confirmation to?</div>
+          <div class="bubble sys">Appointment booked · Recap + recording sent to owner · 1m 52s</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Pricing</p>
+        <h2>One flat price. No per-minute surprises.</h2>
+      </div>
+      <div class="price-grid">
+        <article class="panel glass price-card featured">
+          <div class="price-top">
+            <h3>Flo · AI Receptionist</h3>
+            <span class="pill">Founder offer</span>
+          </div>
+          <div class="price">
+            <span class="amt"><s>$299</s> $100</span><span class="per">/month</span>
+          </div>
+          <p class="price-note">Flat $100/month for the first 5 customers. Then $299/month.</p>
+          <ul class="checks">
+            <li>Answers every call, 24/7, in a natural voice</li>
+            <li>Qualifies callers and books into your calendar</li>
+            <li>Full-call text recap with recording &amp; transcript</li>
+            <li>Dashboard with every call, searchable</li>
+            <li>Your greeting, your services, your pricing</li>
+            <li>Live within 24 hours of intake</li>
+          </ul>
+          <a class="btn btn-primary btn-lg" href="#talk" data-talk>Talk to Flo about it</a>
+          <p class="fine">Month to month. Cancel anytime.</p>
+        </article>
+        <article class="panel glass price-card">
+          <div class="price-top">
+            <h3>Flo · AI Receptionist</h3>
+            <span class="pill dim">Standard</span>
+          </div>
+          <div class="price"><span class="amt">$299</span><span class="per">/month</span></div>
+          <p class="price-note">Everything in the founder plan, at the standard rate.</p>
+          <ul class="checks">
+            <li>Same Flo, same features</li>
+            <li>Priority onboarding</li>
+            <li>Unlimited calls</li>
+          </ul>
+          <a class="btn btn-glass btn-lg" href="tel:+13465906353">Call 346-590-6353</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="sec-head compact">
+        <p class="eyebrow">Services</p>
+        <h2>One product today. More on the way.</h2>
+      </div>
+      <div class="svc-grid">
+        <article class="panel glass svc-card featured">
+          <div class="svc-orb" aria-hidden="true"></div>
+          <span class="step-tag">Available now</span>
+          <h3>Flo · AI Receptionist</h3>
+          <p>Every call answered, every caller qualified, every appointment booked, every conversation recapped and recorded. Live on your number within 24 hours of intake.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#pricing">See pricing</a>
+            <a class="btn btn-glass" href="#talk" data-talk>Talk to Flo</a>
+          </div>
+        </article>
+        <article class="panel glass svc-card">
+          <span class="step-tag dim">In the lab</span>
+          <h3>We're constantly building more.</h3>
+          <p>Flo is the front desk. What comes next takes the customer the rest of the way: quotes, signatures, deposits, reviews, rebooking. Everything we build gets tested on our own lines first and offered to existing customers before anyone else.</p>
+          <p class="cap-meta">Want early access? Tell Flo, or email <a href="mailto:josh@flosys.org">josh@flosys.org</a>.</p>
+        </article>
+        <article class="panel glass svc-card">
+          <span class="step-tag dim">By consultation</span>
+          <h3>Custom solutions &amp; automations</h3>
+          <p>Need Flo to do something specific to your business, or want the repetitive work behind the phone handled too: follow-ups, intake, scheduling logic, hand-offs to the tools you already use? We build custom systems. It starts with a consulting call so we can scope it properly.</p>
+          <a class="btn btn-glass" href="mailto:josh@flosys.org?subject=Consulting%20call%20%E2%80%94%20custom%20solution">Schedule a consulting call</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Live within 24 hours.</h2>
+      </div>
+      <ol class="steps">
+        <li class="panel glass">
+          <span class="num">1</span>
           <h3>Intake</h3>
-          <p>One conversation about your business — about 12 minutes to start.</p>
-        </div>
-        <div class="step">
+          <p>One conversation about your business. About twelve minutes. Your services, your hours, how you like to be reached.</p>
+        </li>
+        <li class="panel glass">
+          <span class="num">2</span>
           <h3>Build</h3>
-          <p>We configure your systems around your trade, your pricing, and your voice.</p>
-        </div>
-        <div class="step">
-          <h3>Launch</h3>
-          <p>Your AI goes live. You watch the missed calls turn into booked jobs.</p>
-        </div>
+          <p>Same day, we set Flo up around your services, your pricing, and your calendar. You hear her on a practice line before anything goes live.</p>
+        </li>
+        <li class="panel glass">
+          <span class="num">3</span>
+          <h3>Go live</h3>
+          <p>Forward your line or take a new number and Flo starts answering, often the same day you did intake. You start reading recaps instead of voicemails.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TEAM TEASER -->
+  <section class="team-teaser" id="team">
+    <div class="wrap teaser-grid">
+      <div>
+        <p class="eyebrow">Who's behind Flo</p>
+        <h2>Built in Texas by people who have answered the phones themselves.</h2>
+        <p class="muted">FLOSYS was founded by Pete O'Neal and Kirby Guidry, with Josh Guidry running sales. We build the systems we wished we'd had.</p>
+        <a class="btn btn-glass" href="/about.html">Meet the team</a>
+      </div>
+      <div class="avatars" aria-hidden="true">
+        <div class="avatar glass"><span>PO</span><small>CEO</small></div>
+        <div class="avatar glass"><span>KG</span><small>CTO</small></div>
+        <div class="avatar glass"><span>JG</span><small>Sales</small></div>
       </div>
     </div>
   </section>
 
-  <section id="about">
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
     <div class="wrap">
-      <div class="sec-head">
-        <h2>About FLOSYS</h2>
-      </div>
-      <p style="max-width:48rem;font-size:1.06rem">FLOSYS is a Texas-based AI services company founded
-        by two people who got tired of watching good contractors lose work to bad follow-up. We build
-        practical AI systems for general contractors, HVAC, plumbing, electrical, and stone/granite
-        businesses — the kind of systems that pay for themselves in booked jobs, not in dashboards.</p>
-    </div>
-  </section>
-
-  <section id="contact" class="alt">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2>Contact</h2>
-        <p>Tell us what's slipping through the cracks and we'll tell you which system fixes it.</p>
-      </div>
-      <div class="contact-grid">
-        <div class="contact-item">
-          <div class="label">Phone</div>
-          <div class="val"><a href="tel:+13465906353">346-590-6353</a></div>
+      <div class="panel glass contact-card">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>Tell us what's slipping through the cracks.</h2>
+          <p class="muted">Call the line and Flo will answer. Or email Josh and a human will.</p>
         </div>
-        <div class="contact-item">
-          <div class="label">Email</div>
-          <div class="val"><a href="mailto:kirby@flosys.org">kirby@flosys.org</a></div>
-        </div>
-        <div class="contact-item">
-          <div class="label">Business address</div>
-          <div class="val" style="font-weight:500;font-size:.98rem">28718 Hidden Cove Drive<br>Magnolia, TX 77354</div>
+        <div class="contact-list">
+          <a class="contact-item" href="tel:+13465906353"><span class="label">Phone</span><span class="val">346-590-6353</span></a>
+          <a class="contact-item" href="mailto:josh@flosys.org"><span class="label">Email</span><span class="val">josh@flosys.org</span></a>
+          <div class="contact-item"><span class="label">Based in</span><span class="val">Magnolia, Texas</span></div>
         </div>
       </div>
     </div>
@@ -214,43 +391,67 @@
 
 </main>
 
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <h4>FLOSYS</h4>
-        <p style="margin:0">AI systems for construction and the trades.<br>
-          28718 Hidden Cove Drive<br>Magnolia, TX 77354</p>
-      </div>
-      <div>
-        <h4>Contact</h4>
-        <p style="margin:0"><a href="tel:+13465906353">346-590-6353</a><br>
-          <a href="mailto:kirby@flosys.org">kirby@flosys.org</a></p>
-      </div>
-      <div>
-        <h4>Legal</h4>
-        <p style="margin:0">
-          <a href="/terms.html">Terms of Service</a><br>
-          <a href="/privacy.html">Privacy Policy</a><br>
-          <a href="/refund.html">Refund &amp; Cancellation Policy</a><br>
-          <a href="https://flosys-org.github.io/a2p-legal/sms-privacy/">SMS Privacy Policy</a><br>
-          <a href="https://flosys-org.github.io/a2p-legal/sms-terms/">SMS Terms &amp; Conditions</a><br>
-          <a href="https://flosys-org.github.io/a2p-legal/sms-opt-in/">Opt in to FLOSYS text messages</a></p>
-      </div>
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="brand small"><svg class="mark" viewBox="0 0 48 48" width="30" height="30" aria-hidden="true">
+        <defs>
+          <radialGradient id="og" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#f3e8ff"/><stop offset=".35" stop-color="#a855f7"/><stop offset=".8" stop-color="#4c1d95"/><stop offset="1" stop-color="#2e1065"/></radialGradient>
+          <linearGradient id="oe" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9d5ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+        </defs>
+        <circle cx="24" cy="24" r="20" fill="url(#og)"/>
+        <circle cx="24" cy="24" r="20" fill="none" stroke="url(#oe)" stroke-width="1.5" opacity=".9"/>
+        <path d="M10 24c3 0 3-6 6-6s3 12 6 12 3-12 6-12 3 6 6 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg><span>FLOSYS</span></div>
+      <p class="muted">AI receptionist and front office for any business.<br>Magnolia, Texas</p>
     </div>
-    <div class="foot-bottom">
-      <span>© 2026 FLOSYS. All rights reserved.</span>
-      <span>
-        <a href="/terms.html">Terms</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/refund.html">Refunds</a>
-        <a href="https://flosys-org.github.io/a2p-legal/sms-privacy/">SMS Privacy</a>
-        <a href="https://flosys-org.github.io/a2p-legal/sms-terms/">SMS Terms</a>
-        <a href="https://flosys-org.github.io/a2p-legal/sms-opt-in/">SMS Opt-In</a>
-      </span>
+    <div>
+      <h4>Contact</h4>
+      <a href="tel:+13465906353">346-590-6353</a><br>
+      <a href="mailto:josh@flosys.org">josh@flosys.org</a>
     </div>
+    <div>
+      <h4>Legal</h4>
+      <a href="/terms.html">Terms of Service</a><br>
+      <a href="/privacy.html">Privacy Policy</a><br>
+      <a href="/refund.html">Refund &amp; Cancellation Policy</a><br>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-privacy/">SMS Privacy Policy</a><br>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-terms/">SMS Terms &amp; Conditions</a><br>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-opt-in/">Opt in to FLOSYS text messages</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 FLOSYS. All rights reserved.</span>
+    <span class="foot-links">
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/refund.html">Refunds</a>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-privacy/">SMS Privacy</a>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-terms/">SMS Terms</a>
+      <a href="https://flosys-org.github.io/a2p-legal/sms-opt-in/">SMS Opt-In</a>
+    </span>
   </div>
 </footer>
 
+<!-- TALK TO FLO -->
+<div class="talk-modal" id="talk" role="dialog" aria-modal="true" aria-labelledby="talkTitle" hidden>
+  <div class="talk-backdrop" data-talk-close></div>
+  <button class="talk-close" data-talk-close aria-label="Close">×</button>
+  <div class="talk-stage" aria-hidden="true"></div>
+  <div class="talk-panel glass">
+    <h3 id="talkTitle">Say hi to Flo</h3>
+    <p class="muted" id="talkStatus">Flo will introduce herself and answer your questions about FLOSYS and what she can do for your business.</p>
+    <div class="talk-actions">
+      <button class="btn btn-primary btn-lg" id="talkStart"><span class="pulse" aria-hidden="true"></span>Start talking</button>
+      <a class="btn btn-glass" href="mailto:josh@flosys.org?subject=Demo%20call%20with%20Flo">Want a live demo? Book a call with Josh</a>
+    </div>
+    <p class="fine">Your mic is only used while you're talking to Flo. Conversations are limited to a few minutes. Flo answers questions here; demos happen on a call with Josh.</p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="/assets/site.js"></script>
 </body>
 </html>
