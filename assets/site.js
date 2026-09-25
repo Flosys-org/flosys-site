@@ -257,7 +257,7 @@
     startBtn.disabled = true;
     setStatus('Connecting to Flo…');
     fetch(FLOW.tokenEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page: location.pathname }) })
-      .then(function (r) { if (!r.ok) throw new Error('token'); return r.json(); })
+      .then(function (r) { return r.json().catch(function () { return { ok: false, error: 'bad response' }; }).then(function (d) { if (!r.ok || !d.ok) { var e = new Error(d.error || ('HTTP ' + r.status)); e.kind = r.status === 429 ? 'limit' : 'token'; throw e; } return d; }); })
       .then(function (d) { return loadRetell().then(function () { return d; }); })
       .then(function (d) {
         var Client = retellMod && (retellMod.RetellWebClient || (retellMod.default && retellMod.default.RetellWebClient));
@@ -269,9 +269,12 @@
         callTimer = setTimeout(function () { endCall(); setStatus('That\'s the time limit for a chat here. For a full demo, book a call with Josh.'); }, FLOW.maxSeconds * 1000);
         return retell.startCall({ accessToken: d.access_token, sampleRate: 24000 });
       })
-      .catch(function () {
+      .catch(function (err) {
         endCall();
-        setStatus('Flo\'s browser line isn\'t open yet. Call 346-590-6353 and she\'ll answer there, or book a call with Josh.');
+        if (err && err.kind === 'limit') setStatus('You\'ve reached the limit for browser chats for now. Call 346-590-6353, or book a call with Josh.');
+        else if (err && err.kind === 'token') setStatus('Flo\'s browser line isn\'t answering right now. Call 346-590-6353 and she\'ll answer there, or book a call with Josh.');
+        else setStatus('Couldn\'t start the call in this browser (' + ((err && err.message) || 'unknown') + '). Call 346-590-6353, or book a call with Josh.');
+        try { console.error('[flo]', err); } catch (e) {}
       });
   });
 
