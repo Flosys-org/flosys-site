@@ -237,13 +237,11 @@
 
   function setStatus(msg) { status.textContent = msg; }
 
+  var retellMod = null;
   function loadRetell() {
-    return new Promise(function (res, rej) {
-      if (window.RetellWebClient) return res();
-      var s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/retell-client-js-sdk@2/dist/index.umd.js';
-      s.onload = res; s.onerror = rej; document.head.appendChild(s);
-    });
+    if (retellMod) return Promise.resolve(retellMod);
+    // jsDelivr's +esm build bundles the SDK's dependencies (livekit, eventemitter3).
+    return import('https://cdn.jsdelivr.net/npm/retell-client-js-sdk@2.0.8/+esm').then(function (m) { retellMod = m; return m; });
   }
 
   function endCall() {
@@ -262,13 +260,14 @@
       .then(function (r) { if (!r.ok) throw new Error('token'); return r.json(); })
       .then(function (d) { return loadRetell().then(function () { return d; }); })
       .then(function (d) {
-        var Client = window.RetellWebClient && (window.RetellWebClient.RetellWebClient || window.RetellWebClient);
+        var Client = retellMod && (retellMod.RetellWebClient || (retellMod.default && retellMod.default.RetellWebClient));
+        if (!Client) throw new Error('sdk');
         retell = new Client();
         retell.on('call_started', function () { talkLive = true; document.body.classList.add('talk-live'); setStatus('Flo is listening. Ask her anything about FLOSYS.'); startBtn.textContent = 'End conversation'; startBtn.disabled = false; });
         retell.on('call_ended', function () { endCall(); setStatus('Thanks for talking with Flo. Want a live demo? Book a call with Josh.'); });
         retell.on('error', function () { endCall(); setStatus("Couldn't hold the call. Try again, or call 346-590-6353."); });
         callTimer = setTimeout(function () { endCall(); setStatus('That\'s the time limit for a chat here. For a full demo, book a call with Josh.'); }, FLOW.maxSeconds * 1000);
-        return retell.startCall({ accessToken: d.access_token });
+        return retell.startCall({ accessToken: d.access_token, sampleRate: 24000 });
       })
       .catch(function () {
         endCall();
