@@ -7,7 +7,7 @@
   /* ---------- Config: where the site gets a Flow web-call token ---------- */
   var FLOW = {
     // HQ endpoint that creates a Retell web-call access token for the Website Flo agent.
-    tokenEndpoint: 'https://hq.flosys.org/api/public/flow/web-call',
+    tokenEndpoint: 'https://hq.flosys.org/api/public/website-flo/webcall',
     maxSeconds: 300
   };
 
@@ -258,7 +258,7 @@
     if (retell) { endCall(); setStatus('Conversation ended. Start again anytime.'); return; }
     startBtn.disabled = true;
     setStatus('Connecting to Flo…');
-    fetch(FLOW.tokenEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: 'flosys.org' }) })
+    fetch(FLOW.tokenEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page: location.pathname }) })
       .then(function (r) { if (!r.ok) throw new Error('token'); return r.json(); })
       .then(function (d) { return loadRetell().then(function () { return d; }); })
       .then(function (d) {
