@@ -285,6 +285,7 @@ body.talk-live .talk-panel h3::after{content:" · listening";color:var(--lavende
 
 /* ---------- capability grid ---------- */
 .cap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+@media(max-width:760px){.cap-grid{grid-template-columns:1fr 1fr;gap:8px}.cap{padding:12px 12px;font-size:.84rem;border-radius:14px}.cap-plus{width:20px;height:20px;font-size:.9rem}}
 .cap{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-radius:16px;color:var(--ink);
   font-family:var(--body);font-weight:600;font-size:.93rem;text-align:left;cursor:pointer;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,background .25s}
 .cap:hover{transform:translateY(-2px);border-color:var(--edge-hi)}
