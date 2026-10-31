@@ -240,8 +240,10 @@
   var retellMod = null;
   function loadRetell() {
     if (retellMod) return Promise.resolve(retellMod);
-    // jsDelivr's +esm build bundles the SDK's dependencies (livekit, eventemitter3).
-    return import('https://cdn.jsdelivr.net/npm/retell-client-js-sdk@2.0.8/+esm').then(function (m) { retellMod = m; return m; });
+    // jsDelivr's +esm build bundles the SDK's dependencies. PINNED to an exact 3.x (31 Oct 2026):
+    // Retell retired the v2 web-call mint on 18 Oct; HQ now mints on /v3, whose answer
+    // (call id, access token, transport, ICE servers) only the 3.x SDK can start.
+    return import('https://cdn.jsdelivr.net/npm/retell-client-js-sdk@3.0.3/+esm').then(function (m) { retellMod = m; return m; });
   }
 
   function endCall() {
@@ -267,7 +269,12 @@
         retell.on('call_ended', function () { endCall(); setStatus('Thanks for talking with Flo. Want a live demo? Book a call with Josh.'); });
         retell.on('error', function () { endCall(); setStatus("Couldn't hold the call. Try again, or call 346-590-6353."); });
         callTimer = setTimeout(function () { endCall(); setStatus('That\'s the time limit for a chat here. For a full demo, book a call with Josh.'); }, FLOW.maxSeconds * 1000);
-        return retell.startCall({ accessToken: d.access_token, sampleRate: 24000 });
+        // v3 connection details from HQ (/api/public/website-flo/webcall): all four go to startCall.
+        // The v3 gateway only sends call_started / call_ended / error — the handlers above are all we listen to.
+        var cfg = { callId: d.call_id, accessToken: d.access_token, sampleRate: 24000 };
+        if (d.transport) cfg.transport = d.transport;
+        if (d.ice_servers && d.ice_servers.length) cfg.iceServers = d.ice_servers;
+        return retell.startCall(cfg);
       })
       .catch(function (err) {
         endCall();
