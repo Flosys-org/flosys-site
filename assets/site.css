@@ -310,3 +310,26 @@ body.talk-live .talk-panel h3::after{content:" · listening";color:var(--lavende
 .svc-orb{position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle at 35% 30%,rgba(243,232,255,.9),rgba(168,85,247,.7) 35%,rgba(76,29,149,.5) 70%,transparent 72%);filter:blur(2px);opacity:.55}
 @media(max-width:960px){.svc-grid{grid-template-columns:1fr}}
+
+/* THE ORB, EVERYWHERE (HQ revamp Phase 7) — the same launcher as HQ's components/flow-launcher.tsx */
+.flow-launcher{position:fixed;right:24px;bottom:24px;z-index:90;display:flex;align-items:center;gap:10px;pointer-events:none}
+body.talk-open .flow-launcher{display:none}
+.flow-orb{pointer-events:auto;position:relative;width:92px;height:92px;border:0;padding:0;border-radius:50%;background:transparent;cursor:pointer;filter:drop-shadow(0 8px 28px rgba(124,58,237,.55));-webkit-tap-highlight-color:transparent}
+.flow-orb-body{position:absolute;inset:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#E9D5FF 0%,#A855F7 34%,#7C3AED 62%,#3B1478 100%);box-shadow:0 0 32px rgba(168,85,247,.55),inset 0 -6px 18px rgba(59,20,120,.6);animation:flow-orb-breath 3.6s ease-in-out infinite}
+.flow-orb:hover .flow-orb-body{box-shadow:0 0 44px rgba(168,85,247,.75),inset 0 -6px 18px rgba(59,20,120,.6)}
+.flow-bubble{pointer-events:auto;display:flex;align-items:center;gap:2px;background:rgba(20,17,31,.92);color:#ECE9F5;border:1px solid rgba(196,181,253,.45);border-radius:16px 16px 4px 16px;box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 24px rgba(139,92,246,.25);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:13px;line-height:1.2;max-width:240px;animation:flow-bubble-rise .42s cubic-bezier(.22,1,.36,1) both}
+.flow-bubble-say{background:none;border:0;color:inherit;font:inherit;cursor:pointer;padding:10px 4px 10px 14px;min-height:44px;text-align:left}
+.flow-bubble-x{background:none;border:0;color:#918AAB;cursor:pointer;min-width:44px;min-height:44px;font-size:16px;line-height:1}
+.flow-launcher.still .flow-orb-body,.flow-launcher.still .flow-bubble{animation:none}
+@keyframes flow-orb-breath{0%,100%{transform:scale(1);opacity:.92}50%{transform:scale(1.04);opacity:1}}
+@keyframes flow-bubble-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (max-width:767px){.flow-launcher{right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px))}.flow-orb{width:76px;height:76px}.flow-orb-body{inset:9px}.flow-bubble{max-width:calc(100vw - 120px)}}
+@media (prefers-reduced-motion:reduce){.flow-orb-body,.flow-bubble{animation:none}}
+.flow-type-instead{margin-top:10px}
+.flow-chat{text-align:left;margin:12px 0}
+.flow-chat-log{max-height:38vh;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px}
+.flow-chat-line{margin:0;padding:8px 12px;border-radius:14px;max-width:85%;font-size:14px;line-height:1.4}
+.flow-chat-line.flow{background:rgba(124,58,237,.18);border:1px solid rgba(196,181,253,.25);align-self:flex-start}
+.flow-chat-line.you{background:rgba(255,255,255,.08);align-self:flex-end}
+.flow-chat-form{display:flex;gap:8px;margin-top:10px}
+.flow-chat-in{flex:1;min-height:44px;border-radius:12px;border:1px solid rgba(196,181,253,.3);background:rgba(255,255,255,.05);color:#fff;padding:0 12px;font:inherit}
