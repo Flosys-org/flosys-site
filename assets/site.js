@@ -1,10 +1,10 @@
-/* FLOSYS site — 3D scene, scroll choreography, Talk-to-Flow widget. */
+/* FLOSYS site — 3D scene, scroll choreography, Talk-to-Flo widget. */
 (function () {
   'use strict';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var mobile = window.matchMedia('(max-width: 860px)').matches;
 
-  /* ---------- Config: where the site gets a Flow web-call token ---------- */
+  /* ---------- Config: where the site gets a Flo web-call token ---------- */
   var FLOW = {
     // HQ endpoint that creates a Retell web-call access token for the Website Flo agent.
     tokenEndpoint: 'https://hq.flosys.org/api/public/website-flo/webcall',
@@ -225,7 +225,7 @@
     menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { menu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false'); }); });
   }
 
-  /* ---------- Talk to Flow ---------- */
+  /* ---------- Talk to Flo ---------- */
   var modal = document.getElementById('talk'), status = document.getElementById('talkStatus'), startBtn = document.getElementById('talkStart');
   var retell = null, callTimer = null;
   function openTalk(e) { if (e) e.preventDefault(); modal.hidden = false; document.body.style.overflow = 'hidden'; document.body.classList.add('talk-open'); talkMode = true; startBtn.focus(); }
@@ -257,7 +257,7 @@
   startBtn.addEventListener('click', function () {
     if (retell) { endCall(); setStatus('Conversation ended. Start again anytime.'); return; }
     startBtn.disabled = true;
-    setStatus('Connecting to Flow…');
+    setStatus('Connecting to Flo…');
     fetch(FLOW.tokenEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page: location.pathname }) })
       .then(function (r) { return r.json().catch(function () { return { ok: false, error: 'bad response' }; }).then(function (d) { if (!r.ok || !d.ok) { var e = new Error(d.error || ('HTTP ' + r.status)); e.kind = r.status === 429 ? 'limit' : 'token'; throw e; } return d; }); })
       .then(function (d) { return loadRetell().then(function () { return d; }); })
@@ -265,8 +265,8 @@
         var Client = retellMod && (retellMod.RetellWebClient || (retellMod.default && retellMod.default.RetellWebClient));
         if (!Client) throw new Error('sdk');
         retell = new Client();
-        retell.on('call_started', function () { talkLive = true; document.body.classList.add('talk-live'); setStatus('Flow is listening. Ask her anything — or ask her to answer like your receptionist.'); startBtn.textContent = 'End conversation'; startBtn.disabled = false; });
-        retell.on('call_ended', function () { endCall(); setStatus('Thanks for talking with Flow. Want a live demo? Book a call with Josh.'); });
+        retell.on('call_started', function () { talkLive = true; document.body.classList.add('talk-live'); setStatus('Flo is listening. Ask her anything — or ask her to answer like your receptionist.'); startBtn.textContent = 'End conversation'; startBtn.disabled = false; });
+        retell.on('call_ended', function () { endCall(); setStatus('Thanks for talking with Flo. Want a live demo? Book a call with Josh.'); });
         retell.on('error', function () { endCall(); setStatus("Couldn't hold the call. Try again, or call 346-683-4178."); });
         callTimer = setTimeout(function () { endCall(); setStatus('That\'s the time limit for a chat here. For a full demo, book a call with Josh.'); }, FLOW.maxSeconds * 1000);
         // v3 connection details from HQ (/api/public/website-flo/webcall): all four go to startCall.
@@ -279,7 +279,7 @@
       .catch(function (err) {
         endCall();
         if (err && err.kind === 'limit') setStatus('You\'ve reached the limit for browser chats for now. Call 346-683-4178, or book a call with Josh.');
-        else if (err && err.kind === 'token') setStatus('Flow\'s browser line isn\'t answering right now. Call 346-683-4178 and she\'ll answer there, or book a call with Josh.');
+        else if (err && err.kind === 'token') setStatus('Flo\'s browser line isn\'t answering right now. Call 346-683-4178 and she\'ll answer there, or book a call with Josh.');
         else setStatus('Couldn\'t start the call in this browser (' + ((err && err.message) || 'unknown') + '). Call 346-683-4178, or book a call with Josh.');
         try { console.error('[flo]', err); } catch (e) {}
       });
