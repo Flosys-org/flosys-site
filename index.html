@@ -6,7 +6,7 @@
 <title>FLOSYS — Meet Flo</title>
 <meta name="description" content="FLOSYS builds Flo, the AI receptionist for any business. Flo answers every call 24/7, books the appointment, texts a full recap, and puts every call in your dashboard.">
 <meta property="og:title" content="FLOSYS — Meet Flo, the receptionist who never misses a call">
-<meta property="og:description" content="AI receptionist for any business. $299/month. Talk to Flo right now.">
+<meta property="og:description" content="AI receptionist for any business. Three plans, sold by calls. Talk to Flo right now.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://flosys.org/">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -247,49 +247,83 @@
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section class="pricing" id="pricing">
+  <!-- PRICING — the price sheet is the only place a price lives (10 Nov 2026): assets/site.js fills these cards from
+       https://hq.flosys.org/api/public/prices; the numbers below are the sheet's as of this deploy, so the page never shows a
+       number the sheet does not. Sold by calls, never by the minute. No trial, no annual price, no launch price. -->
+  <section class="pricing" id="pricing" data-prices="https://hq.flosys.org/api/public/prices">
     <div class="wrap">
       <div class="sec-head">
         <p class="eyebrow">Pricing</p>
-        <h2>One flat price. No per-minute surprises.</h2>
+        <h2>Three plans. Sold by calls, never by the minute.</h2>
       </div>
-      <div class="price-grid">
-        <article class="panel glass price-card featured">
+      <div class="price-grid price-grid-3">
+        <article class="panel glass price-card" data-plan="answer">
           <div class="price-top">
-            <h3>Flo · AI Receptionist</h3>
-            <span class="pill">Founder offer</span>
+            <h3>Flo Answer</h3>
+            <span class="pill dim">Messages</span>
           </div>
-          <div class="price">
-            <span class="amt"><s>$299</s> $100</span><span class="per">/month</span>
-          </div>
-          <p class="price-note">Flat $100/month for the first 5 customers. Then $299/month.</p>
+          <div class="price"><span class="amt" data-field="monthly">$149</span><span class="per">/month</span></div>
+          <p class="price-note"><span data-field="setup">No setup fee</span> · <span data-field="about_calls">about 150 calls a month</span></p>
           <ul class="checks">
-            <li>Answers every call, 24/7, in a natural voice</li>
-            <li>Qualifies callers and books into your calendar</li>
-            <li>Full-call text recap with recording &amp; transcript</li>
-            <li>Dashboard with every call, searchable</li>
-            <li>Your greeting, your services, your pricing</li>
-            <li>Live within 24 hours of intake</li>
+            <li>Answers 24/7 in your business's name</li>
+            <li>Takes messages and flags the urgent ones</li>
+            <li>Answers hours, services, area and price ranges</li>
+            <li>Texts you the recap and the recording after every call</li>
+            <li>Practice line before she goes live</li>
+          </ul>
+          <a class="btn btn-glass btn-lg" href="tel:+13465906353">Call 346-590-6353</a>
+        </article>
+        <article class="panel glass price-card featured" data-plan="book">
+          <div class="price-top">
+            <h3>Flo Book</h3>
+            <span class="pill">Most shops</span>
+          </div>
+          <div class="price"><span class="amt" data-field="monthly">$399</span><span class="per">/month</span></div>
+          <p class="price-note"><span data-field="setup">$299 setup</span> · <span data-field="about_calls">about 250 calls a month</span></p>
+          <ul class="checks">
+            <li>Everything in Flo Answer</li>
+            <li>Qualifies callers and books on your calendar, drive time included</li>
+            <li>Confirmation text on the call, reminders the day before and day of</li>
+            <li>Remembers repeat callers; transfers to you live when you want it</li>
+            <li>Weekly review of her calls</li>
           </ul>
           <a class="btn btn-primary btn-lg" href="#talk" data-talk>Talk to Flo about it</a>
           <p class="fine">Month to month. Cancel anytime.</p>
         </article>
-        <article class="panel glass price-card">
+        <article class="panel glass price-card" data-plan="front_office">
           <div class="price-top">
-            <h3>Flo · AI Receptionist</h3>
-            <span class="pill dim">Standard</span>
+            <h3>Flo Front Office</h3>
+            <span class="pill dim">For 50+ jobs a month</span>
           </div>
-          <div class="price"><span class="amt">$299</span><span class="per">/month</span></div>
-          <p class="price-note">Everything in the founder plan, at the standard rate.</p>
+          <div class="price"><span class="amt" data-field="monthly">$999</span><span class="per">/month</span></div>
+          <p class="price-note"><span data-field="setup">$999 setup</span> · <span data-field="about_calls">about 500 calls a month</span></p>
           <ul class="checks">
-            <li>Same Flo, same features</li>
-            <li>Priority onboarding</li>
-            <li>Unlimited calls</li>
+            <li>Everything in Flo Book</li>
+            <li>Estimates drafted from your price list, approved with one tap</li>
+            <li>E-sign and deposit through your own Stripe account</li>
+            <li>The Done link, then the review ask</li>
+            <li>Your day in one text at 7 am</li>
           </ul>
+          <p class="fine" data-field="front_office_guarantee">Estimates out in under an hour, every time, or that month's upgrade is credited.</p>
           <a class="btn btn-glass btn-lg" href="tel:+13465906353">Call 346-590-6353</a>
         </article>
       </div>
+      <p class="price-note overage" data-field="overage_line">If you go over, Flo keeps answering, we text you first, and extra is $40 per 100 minutes ($35 on Front Office).</p>
+      <article class="panel glass price-card never-miss" data-plan="never_miss">
+        <div class="price-top">
+          <h3>Never-Miss</h3>
+          <span class="pill dim">Not ready for AI yet?</span>
+        </div>
+        <div class="price"><span class="amt" data-field="monthly">$79</span><span class="per">/month</span></div>
+        <p class="price-note"><span data-field="setup">No setup fee</span> · every call you miss gets a text back, from the Flosys number we give you</p>
+        <ul class="checks">
+          <li>Your unanswered calls forward to your Flosys number</li>
+          <li>The caller hears one short line and gets a text within seconds</li>
+          <li>Their reply reaches you by text and on your dashboard</li>
+          <li>One tap sends a customer your Google review link</li>
+        </ul>
+        <a class="btn btn-glass btn-lg" href="tel:+13465906353">Call 346-590-6353</a>
+      </article>
     </div>
   </section>
 
@@ -452,7 +486,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="/assets/site.js?v=2026-11-03-flo"></script>
+<script src="/assets/site.js?v=2026-11-10-prices"></script>
 <script src="/assets/flow-orb.js?v=2026-11-03-flo"></script>
 </body>
 </html>

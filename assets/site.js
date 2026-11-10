@@ -368,3 +368,29 @@
   initHover();
   initMark();
 })();
+
+// THE PRICE SHEET IS THE ONLY PLACE A PRICE LIVES (10 Nov 2026): the pricing cards are filled from HQ's public price
+// list (hq.flosys.org/api/public/prices) so the site never disagrees with the Sale Card or an invoice. The numbers in
+// the HTML are the sheet's as of the deploy — the page reads right with no script, and this only corrects it.
+(function () {
+  var sec = document.querySelector('[data-prices]');
+  if (!sec || !window.fetch) return;
+  var money = function (n) { return '$' + Number(n).toLocaleString('en-US'); };
+  fetch(sec.getAttribute('data-prices'), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+    if (!j || !j.ok || !Array.isArray(j.plans)) return;
+    j.plans.forEach(function (p) {
+      var card = sec.querySelector('[data-plan="' + p.id + '"]');
+      if (!card) return;
+      card.hidden = false;
+      var set = function (f, v) { var el = card.querySelector('[data-field="' + f + '"]'); if (el && v != null) el.textContent = v; };
+      set('monthly', money(p.monthly));
+      set('setup', p.setup > 0 ? money(p.setup) + ' setup' : 'No setup fee');
+      if (p.about_calls) set('about_calls', 'about ' + Number(p.about_calls).toLocaleString('en-US') + ' calls a month');
+      var name = card.querySelector('h3'); if (name && p.label) name.textContent = p.label;
+    });
+    // a plan the sheet switched off leaves the page
+    sec.querySelectorAll('[data-plan]').forEach(function (card) { if (!j.plans.some(function (p) { return p.id === card.getAttribute('data-plan'); })) card.hidden = true; });
+    var over = sec.querySelector('[data-field="overage_line"]'); if (over && j.overage_line) over.textContent = j.overage_line;
+    var g = sec.querySelector('[data-field="front_office_guarantee"]'); if (g && j.front_office_guarantee) g.textContent = j.front_office_guarantee;
+  }).catch(function () { /* the sheet's numbers in the HTML stand */ });
+})();
