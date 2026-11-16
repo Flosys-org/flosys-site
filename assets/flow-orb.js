@@ -1,5 +1,6 @@
 /* THE ORB, EVERYWHERE (HQ revamp Phase 7, 2 Nov 2026) — flosys.org's copy of
- * HQ's components/flow-launcher.tsx: the same plain purple floating orb (92 px
+ * HQ's components/flow-launcher.tsx: Flo's five sound bars on a dark round plate
+ * (16 Nov 2026; she was a purple orb), the same size (92 px
  * desktop, 76 px phone), bottom-right, no frame, no label; the same bubble
  * "Click to talk to Flo" (× hides it for this session, it's back next
  * session); the same glow and breath, stilled under prefers-reduced-motion.
@@ -25,7 +26,7 @@
     x.addEventListener('click', function () { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} bubble.remove(); });
     bubble.appendChild(say); bubble.appendChild(x); wrap.appendChild(bubble);
   }
-  var orb = el('button', 'flow-orb', '<span class="flow-orb-body" aria-hidden="true"></span>');
+  var orb = el('button', 'flow-orb', '<span class="flow-orb-body" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>');
   orb.type = 'button'; orb.setAttribute('aria-label', 'Talk to Flo'); orb.title = 'Talk to Flo';
   orb.setAttribute('data-testid', 'flo-orb'); orb.setAttribute('data-surface', 'website'); orb.setAttribute('data-launcher', 'flow');
   orb.addEventListener('click', openTalk);

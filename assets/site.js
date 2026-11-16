@@ -12,7 +12,7 @@
   };
 
   /* ---------- 3D scene ---------- */
-  var scene, camera, renderer, orb, core, wave, stars, uniforms, clock, ready = false;
+  var scene, camera, renderer, orb, bars, stars, uniforms, clock, ready = false;
   var target = { x: 3.2, y: 0.6, scale: 0.38, hue: 0, wave: 1 };
 
   function initScene() {
@@ -32,71 +32,25 @@
       uWave: { value: 1 }
     };
 
-    // Glass shell — fresnel rim, refracted-looking gradient, thin highlights.
-    var shellMat = new THREE.ShaderMaterial({
-      uniforms: uniforms,
-      transparent: true,
-      depthWrite: false,
-      side: THREE.FrontSide,
-      vertexShader: [
-        'varying vec3 vN; varying vec3 vV; varying vec3 vP;',
-        'void main(){ vec4 wp = modelMatrix * vec4(position,1.0); vP = wp.xyz;',
-        ' vN = normalize(mat3(modelMatrix) * normal); vV = normalize(cameraPosition - wp.xyz);',
-        ' gl_Position = projectionMatrix * viewMatrix * wp; }'
-      ].join('\n'),
-      fragmentShader: [
-        'uniform float uTime; uniform float uHue; varying vec3 vN; varying vec3 vV; varying vec3 vP;',
-        'vec3 hs(float h){ return mix(vec3(0.66,0.36,0.98), vec3(0.85,0.55,1.0), h); }',
-        'void main(){',
-        ' float f = pow(1.0 - max(dot(vN, vV), 0.0), 2.6);',
-        ' float band = 0.5 + 0.5*sin(vP.y*3.0 + uTime*0.8);',
-        ' vec3 col = mix(vec3(0.30,0.12,0.60), hs(uHue), band*0.6+0.2);',
-        ' vec3 rim = mix(vec3(0.77,0.71,0.99), vec3(1.0), f);',
-        ' float spec = pow(max(dot(reflect(-vV, vN), normalize(vec3(0.6,0.9,0.4))),0.0), 40.0);',
-        ' vec3 c = col*0.35 + rim*f*1.15 + spec*0.9;',
-        ' float a = 0.10 + f*0.85 + spec*0.5;',
-        ' gl_FragColor = vec4(c, a); }'
-      ].join('\n')
-    });
-    orb = new THREE.Mesh(new THREE.SphereGeometry(1.55, 96, 96), shellMat);
-
-    // Inner core — displaced, glowing, breathing with the "voice".
-    var coreMat = new THREE.ShaderMaterial({
-      uniforms: uniforms,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      vertexShader: [
-        'uniform float uTime; uniform float uWave; varying float vD; varying vec3 vN;',
-        'float n(vec3 p){ return sin(p.x*3.1+uTime*1.3)*sin(p.y*2.7-uTime*1.1)*sin(p.z*3.3+uTime*0.9); }',
-        'void main(){ float d = n(position)*0.14*uWave; vD = d; vN = normal;',
-        ' vec3 p = position + normal*d; gl_Position = projectionMatrix * modelViewMatrix * vec4(p,1.0); }'
-      ].join('\n'),
-      fragmentShader: [
-        'uniform float uHue; varying float vD; varying vec3 vN;',
-        'void main(){ float g = smoothstep(-0.14, 0.14, vD);',
-        ' vec3 a = vec3(0.42,0.16,0.85); vec3 b = mix(vec3(0.75,0.45,1.0), vec3(0.95,0.75,1.0), uHue);',
-        ' vec3 c = mix(a, b, g); float rim = pow(1.0-abs(vN.z),1.5);',
-        ' gl_FragColor = vec4(c, 0.55 + rim*0.35); }'
-      ].join('\n')
-    });
-    core = new THREE.Mesh(new THREE.SphereGeometry(0.78, 64, 64), coreMat);
-
-    // Voice wave — a tube through the middle of the orb.
-    var pts = [];
-    for (var i = 0; i <= 120; i++) { var t = i / 120; pts.push(new THREE.Vector3(-1.25 + 2.5 * t, 0, 0)); }
-    var curve = new THREE.CatmullRomCurve3(pts);
-    var waveGeo = new THREE.TubeGeometry(curve, 120, 0.028, 8, false);
-    wave = new THREE.Mesh(waveGeo, new THREE.MeshBasicMaterial({ color: 0xe9d5ff, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending }));
-    wave.userData.base = waveGeo.attributes.position.array.slice();
-
+    // Flo — five sound bars in the logo's colours (16 Nov 2026; she was a glass orb).
+    // Each bar is a cylinder with a round cap at each end, so its height can change
+    // without squashing the caps.
+    var BAR_R = 0.2, BAR_X = [-1.2, -0.6, 0, 0.6, 1.2], BAR_H = [0.55, 1.15, 1.75, 1.15, 0.55], BAR_C = [0x7c3aed, 0xa78bfa, 0xffffff, 0xa78bfa, 0x7c3aed];
     var group = new THREE.Group();
-    group.add(core); group.add(wave); group.add(orb);
+    bars = [];
+    for (var bi = 0; bi < 5; bi++) {
+      var mat = new THREE.MeshBasicMaterial({ color: BAR_C[bi] });
+      var body = new THREE.Mesh(new THREE.CylinderGeometry(BAR_R, BAR_R, 1, 32), mat);
+      var top = new THREE.Mesh(new THREE.SphereGeometry(BAR_R, 32, 16), mat), bot = new THREE.Mesh(new THREE.SphereGeometry(BAR_R, 32, 16), mat);
+      var bar = new THREE.Group(); bar.add(body); bar.add(top); bar.add(bot); bar.position.x = BAR_X[bi];
+      bar.userData = { body: body, top: top, bot: bot, h: BAR_H[bi], cur: BAR_H[bi] };
+      bars.push(bar); group.add(bar);
+    }
+    orb = { userData: { group: group } };
     group.position.x = mobile ? 1.4 : 3.2;
     group.position.y = mobile ? 2.4 : 0.6;
     group.scale.setScalar(mobile ? 0.28 : 0.38);
     scene.add(group);
-    orb.userData.group = group;
 
     // Particle field.
     var N = mobile ? 380 : 800, pos = new Float32Array(N * 3), sz = new Float32Array(N);
@@ -166,18 +120,19 @@
     g.position.y += (target.y - g.position.y) * k;
     var s = g.scale.x + (target.scale - g.scale.x) * (talkMode ? 0.06 : 0.03);
     g.scale.set(s, s, s);
-    g.rotation.y = t * 0.12 + (talkMode ? 0 : mouse.x * 0.25);
-    g.rotation.x = Math.sin(t * 0.2) * 0.08 + (talkMode ? 0 : mouse.y * 0.15);
-    core.rotation.y = -t * 0.3; core.rotation.z = t * 0.15;
-    // animate the wave tube
-    var arr = wave.geometry.attributes.position.array, base = wave.userData.base;
-    for (var i = 0; i < arr.length; i += 3) {
-      var x = base[i], amp = 0.32 * uniforms.uWave.value;
-      var env = Math.exp(-x * x * 1.1);
-      arr[i + 1] = base[i + 1] + env * (Math.sin(x * 6.0 - t * 5.0) * amp + Math.sin(x * 13.0 + t * 7.0) * amp * 0.35);
-      arr[i + 2] = base[i + 2] + env * Math.cos(x * 4.0 + t * 3.0) * amp * 0.3;
+    g.rotation.y = Math.sin(t * 0.3) * 0.18 + (talkMode ? 0 : mouse.x * 0.25);
+    g.rotation.x = Math.sin(t * 0.2) * 0.06 + (talkMode ? 0 : mouse.y * 0.12);
+    // The bars: a slow breath at rest, a quiet ripple while she listens, a full bounce while she talks.
+    var lvl = uniforms.uWave.value;
+    for (var i = 0; i < bars.length; i++) {
+      var u = bars[i].userData, want;
+      if (talkMode && talkLive) want = u.h * (0.35 + 0.65 * Math.abs(Math.sin(t * 7.5 + i * 1.9)) * (0.7 + 0.3 * Math.sin(t * 3.1 + i)));
+      else if (talkMode) want = u.h * (0.55 + 0.12 * Math.sin(t * 4.5 - i * 0.7));
+      else want = u.h * (0.92 + 0.08 * Math.sin(t * 1.9 - i * 0.6) + 0.1 * (lvl - 1) * Math.sin(t * 3.3 + i * 1.3));
+      u.cur += (want - u.cur) * 0.25;
+      var len = Math.max(0.001, u.cur);
+      u.body.scale.y = len; u.top.position.y = len / 2; u.bot.position.y = -len / 2;
     }
-    wave.geometry.attributes.position.needsUpdate = true;
     stars.rotation.z = t * 0.01;
     camera.position.x += ((talkMode ? 0 : mouse.x * 0.3) - camera.position.x) * 0.03;
     camera.position.y += ((talkMode ? 0 : -mouse.y * 0.2) - camera.position.y) * 0.03;
