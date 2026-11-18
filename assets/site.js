@@ -221,9 +221,9 @@
         if (!Client) throw new Error('sdk');
         retell = new Client();
         retell.on('call_started', function () { talkLive = true; document.body.classList.add('talk-live'); setStatus('Flo is listening. Ask her anything — or ask her to answer like your receptionist.'); startBtn.textContent = 'End conversation'; startBtn.disabled = false; });
-        retell.on('call_ended', function () { endCall(); setStatus('Thanks for talking with Flo. Want a live demo? Book a call with Josh.'); });
+        retell.on('call_ended', function () { endCall(); setStatus('Thanks for talking with Flo. Want a live demo? Call Flo at 346-683-4178.'); });
         retell.on('error', function () { endCall(); setStatus("Couldn't hold the call. Try again, or call 346-683-4178."); });
-        callTimer = setTimeout(function () { endCall(); setStatus('That\'s the time limit for a chat here. For a full demo, book a call with Josh.'); }, FLOW.maxSeconds * 1000);
+        callTimer = setTimeout(function () { endCall(); setStatus('That\'s the time limit for a chat here. For a full demo, call Flo at 346-683-4178.'); }, FLOW.maxSeconds * 1000);
         // v3 connection details from HQ (/api/public/website-flo/webcall): all four go to startCall.
         // The v3 gateway only sends call_started / call_ended / error — the handlers above are all we listen to.
         var cfg = { callId: d.call_id, accessToken: d.access_token, sampleRate: 24000 };
@@ -233,9 +233,9 @@
       })
       .catch(function (err) {
         endCall();
-        if (err && err.kind === 'limit') setStatus('You\'ve reached the limit for browser chats for now. Call 346-683-4178, or book a call with Josh.');
-        else if (err && err.kind === 'token') setStatus('Flo\'s browser line isn\'t answering right now. Call 346-683-4178 and she\'ll answer there, or book a call with Josh.');
-        else setStatus('Couldn\'t start the call in this browser (' + ((err && err.message) || 'unknown') + '). Call 346-683-4178, or book a call with Josh.');
+        if (err && err.kind === 'limit') setStatus('You\'ve reached the limit for browser chats for now. Call Flo at 346-683-4178.');
+        else if (err && err.kind === 'token') setStatus('Flo\'s browser line isn\'t answering right now. Call 346-683-4178 and she\'ll answer there.');
+        else setStatus('Couldn\'t start the call in this browser (' + ((err && err.message) || 'unknown') + '). Call Flo at 346-683-4178.');
         try { console.error('[flo]', err); } catch (e) {}
       });
   });
@@ -345,6 +345,5 @@
     // a plan the sheet switched off leaves the page
     sec.querySelectorAll('[data-plan]').forEach(function (card) { if (!j.plans.some(function (p) { return p.id === card.getAttribute('data-plan'); })) card.hidden = true; });
     var over = sec.querySelector('[data-field="overage_line"]'); if (over && j.overage_line) over.textContent = j.overage_line;
-    var g = sec.querySelector('[data-field="front_office_guarantee"]'); if (g && j.front_office_guarantee) g.textContent = j.front_office_guarantee;
   }).catch(function () { /* the sheet's numbers in the HTML stand */ });
 })();
