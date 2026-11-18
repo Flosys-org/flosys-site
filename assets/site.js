@@ -221,9 +221,9 @@
         if (!Client) throw new Error('sdk');
         retell = new Client();
         retell.on('call_started', function () { talkLive = true; document.body.classList.add('talk-live'); setStatus('Flo is listening. Ask her anything — or ask her to answer like your receptionist.'); startBtn.textContent = 'End conversation'; startBtn.disabled = false; });
-        retell.on('call_ended', function () { endCall(); setStatus('Thanks for talking with Flo. Want a live demo? Call Flo at 346-683-4178.'); });
-        retell.on('error', function () { endCall(); setStatus("Couldn't hold the call. Try again, or call 346-683-4178."); });
-        callTimer = setTimeout(function () { endCall(); setStatus('That\'s the time limit for a chat here. For a full demo, call Flo at 346-683-4178.'); }, FLOW.maxSeconds * 1000);
+        retell.on('call_ended', function () { endCall(); setStatus('Thanks for talking with Flo. Want to talk to a person? Call 346-590-6353.'); });
+        retell.on('error', function () { endCall(); setStatus("Couldn't hold the call. Try again, or call 346-590-6353."); });
+        callTimer = setTimeout(function () { endCall(); setStatus('That\'s the time limit for a chat here. Want more? Call 346-590-6353.'); }, FLOW.maxSeconds * 1000);
         // v3 connection details from HQ (/api/public/website-flo/webcall): all four go to startCall.
         // The v3 gateway only sends call_started / call_ended / error — the handlers above are all we listen to.
         var cfg = { callId: d.call_id, accessToken: d.access_token, sampleRate: 24000 };
@@ -233,9 +233,9 @@
       })
       .catch(function (err) {
         endCall();
-        if (err && err.kind === 'limit') setStatus('You\'ve reached the limit for browser chats for now. Call Flo at 346-683-4178.');
-        else if (err && err.kind === 'token') setStatus('Flo\'s browser line isn\'t answering right now. Call 346-683-4178 and she\'ll answer there.');
-        else setStatus('Couldn\'t start the call in this browser (' + ((err && err.message) || 'unknown') + '). Call Flo at 346-683-4178.');
+        if (err && err.kind === 'limit') setStatus('You\'ve reached the limit for browser chats for now. Call 346-590-6353.');
+        else if (err && err.kind === 'token') setStatus('Flo\'s browser line isn\'t answering right now. Call 346-590-6353 instead.');
+        else setStatus('Couldn\'t start the call in this browser (' + ((err && err.message) || 'unknown') + '). Call 346-590-6353.');
         try { console.error('[flo]', err); } catch (e) {}
       });
   });
@@ -346,4 +346,31 @@
     sec.querySelectorAll('[data-plan]').forEach(function (card) { if (!j.plans.some(function (p) { return p.id === card.getAttribute('data-plan'); })) card.hidden = true; });
     var over = sec.querySelector('[data-field="overage_line"]'); if (over && j.overage_line) over.textContent = j.overage_line;
   }).catch(function () { /* the sheet's numbers in the HTML stand */ });
+})();
+// GET A CALL BACK (18 Nov 2026): the short form posts to HQ, which makes ONE lead in the Dialer's pool (source "Website",
+// way in "form"). Consent is required — no tick, no lead. The hidden "website" field is a honeypot: a person never fills it.
+(function () {
+  var form = document.getElementById('cbForm');
+  if (!form || !window.fetch) return;
+  var status = document.getElementById('cbStatus');
+  var say = function (t, bad) { status.textContent = t; status.classList.toggle('bad', !!bad); };
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = form.elements;
+    var digits = String(f.cell.value || '').replace(/\D/g, '');
+    if (!f.name.value.trim() || !f.business.value.trim()) return say('Please add your name and your business name.', true);
+    if (digits.length < 10 || digits.length > 11) return say('Please enter a 10-digit cell number.', true);
+    if (!f.consent.checked) return say('Please tick the box so we can call and text you about your request.', true);
+    var btn = form.querySelector('button[type="submit"]'); btn.disabled = true; say('Sending…');
+    fetch('https://hq.flosys.org/api/public/callback-request', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: f.name.value, business: f.business.value, cell: f.cell.value, best_time: f.best_time.value, website: f.website.value, consent: true, consent_text: form.querySelector('.cb-consent span').textContent.trim(), page: location.pathname })
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok && j.ok, j: j }; }); })
+      .then(function (x) {
+        if (x.ok) { form.reset(); say('Thanks — we got it. Someone from the Flosys team will call you soon.'); }
+        else say((x.j && x.j.error) || 'That didn\'t go through. Please try again, or call 346-590-6353.', true);
+      })
+      .catch(function () { say('That didn\'t go through. Please try again, or call 346-590-6353.', true); })
+      .then(function () { btn.disabled = false; });
+  });
 })();

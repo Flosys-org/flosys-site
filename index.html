@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=2026-11-16-bars">
+<link rel="stylesheet" href="/assets/site.css?v=2026-11-18-callback">
 </head>
 <body>
 <canvas id="scene" aria-hidden="true"></canvas>
@@ -297,8 +297,8 @@
         <article class="panel glass svc-card">
           <span class="step-tag dim">By consultation</span>
           <h3>Custom solutions &amp; automations</h3>
-          <p>Need Flo to do something specific to your business, or want the repetitive work behind the phone handled too: follow-ups, intake, scheduling logic, hand-offs to the tools you already use? We build custom systems. It starts with a consulting call so we can scope it properly.</p>
-          <a class="btn btn-glass" href="https://cal.com/josh-guidry-lnej3m/30min" target="_blank" rel="noopener">Schedule a consulting call</a>
+          <p>Need Flo to do something specific to your business, or want the repetitive work behind the phone handled too: follow-ups, intake, scheduling logic, hand-offs to the tools you already use? We build custom systems. Email Josh and he'll scope it with you properly.</p>
+          <a class="btn btn-glass" href="mailto:josh@flosys.org?subject=More%20information%20about%20Flosys">Email Josh for more information</a>
         </article>
       </div>
     </div>
@@ -344,6 +344,29 @@
         <div class="avatar glass"><span>PO</span><small>CEO</small></div>
         <div class="avatar glass"><span>KG</span><small>CTO</small></div>
         <div class="avatar glass"><span>JG</span><small>Sales Manager</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET A CALL BACK -->
+  <section class="callback" id="callback">
+    <div class="wrap">
+      <div class="panel glass contact-card">
+        <div>
+          <p class="eyebrow">Get a call back</p>
+          <h2>Want a person to call you?</h2>
+          <p class="muted">Leave your details and someone from the Flosys team will call you at the time that suits you.</p>
+        </div>
+        <form class="cb-form" id="cbForm" novalidate>
+          <label>Your name<input name="name" autocomplete="name" required maxlength="80"></label>
+          <label>Business name<input name="business" autocomplete="organization" required maxlength="120"></label>
+          <label>Cell phone<input name="cell" type="tel" autocomplete="tel" inputmode="tel" required maxlength="20"></label>
+          <label>Best time to call<input name="best_time" maxlength="80" placeholder="e.g. weekday mornings"></label>
+          <label class="cb-hp" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+          <label class="cb-consent"><input type="checkbox" name="consent" required> <span>Yes, Flosys can call and text me about my request. Msg &amp; data rates may apply. Reply STOP to opt out. <a href="https://flosys-org.github.io/a2p-legal/sms-terms/" target="_blank" rel="noopener">SMS terms</a></span></label>
+          <button class="btn btn-primary" type="submit">Request a call back</button>
+          <p class="fine" id="cbStatus" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </div>
   </section>
@@ -412,16 +435,16 @@
     <p class="muted" id="talkStatus">Flo will introduce herself, answer your questions — and show you how she'd answer your business's phone.</p>
     <div class="talk-actions">
       <button class="btn btn-primary btn-lg" id="talkStart"><span class="pulse" aria-hidden="true"></span>Start talking</button>
-      <a class="btn btn-glass" href="tel:+13466834178">Want a live demo? Call Flo at 346-683-4178</a>
+      <a class="btn btn-glass" href="tel:+13465906353">Prefer the phone? Call 346-590-6353</a>
     </div>
-    <p class="fine">Your mic is only used while you're talking to Flo. Conversations are limited to a few minutes. Prefer the phone? Call Flo at 346-683-4178.</p>
+    <p class="fine">Your mic is only used while you're talking to Flo. Conversations are limited to a few minutes. Prefer the phone? Call 346-590-6353.</p>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="/assets/site.js?v=2026-11-16-bars"></script>
-<script src="/assets/flow-orb.js?v=2026-11-16-bars"></script>
+<script src="/assets/site.js?v=2026-11-18-callback"></script>
+<script src="/assets/flow-orb.js?v=2026-11-18-callback"></script>
 </body>
 </html>
