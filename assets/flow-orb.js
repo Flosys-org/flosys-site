@@ -56,8 +56,8 @@
     var wait = line('flow', '…'); input.disabled = true;
     fetch(CHAT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history.slice(-16), page: location.pathname }) })
       .then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
-      .then(function (d) { var reply = d && d.ok ? d.reply : ((d && d.error) || "Flo didn't answer — call her at 346-683-4178."); wait.textContent = reply; if (d && d.ok) history.push({ role: 'assistant', content: reply }); })
-      .catch(function () { wait.textContent = "Flo didn't answer — call her at 346-683-4178."; })
+      .then(function (d) { var reply = d && d.ok ? d.reply : ((d && d.error) || "Flo didn't answer — call 346-590-6353."); wait.textContent = reply; if (d && d.ok) history.push({ role: 'assistant', content: reply }); })
+      .catch(function () { wait.textContent = "Flo didn't answer — call 346-590-6353."; })
       .then(function () { input.disabled = false; input.focus(); });
   });
 })();
